@@ -12,6 +12,14 @@ using Android.Widget;
 
 namespace Androbe.Clothes
 {
+    public enum Wear
+    {
+        Hat,
+        Top,
+        Bottom,
+        Shoes,
+    }
+
     public enum Color
     {
         Multicolor,

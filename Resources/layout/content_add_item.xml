@@ -25,17 +25,20 @@
         android:layout_weight="0.15"
         android:id="@+id/frameLayout1">
 
-        <EditText
+        <TextView
+            android:text="Wear type"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:id="@+id/editText1"
-            android:inputType="text"
-            android:hint="Size"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:paddingStart="48dp"
-            android:paddingEnd="48dp" />
+            android:paddingEnd="48dp"
+            android:id="@+id/textView1"
+            android:textSize="20dp"/>
 
-        <EditText
+
+
+        <!--<EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -44,7 +47,6 @@
             android:hint="Color"
             android:paddingStart="48dp"
             android:paddingEnd="48dp"
-            android:paddingBottom="96dp"/>
-
+            android:paddingBottom="96dp"/>-->
     </FrameLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Plugin.Media;
+using Androbe.Clothes;
 
 namespace Androbe
 {
@@ -21,6 +23,8 @@ namespace Androbe
     {
         ImageView ImgView;
         ViewStates FabState;
+        TextView textWear;
+        PopupMenu popWear;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,7 +44,39 @@ namespace Androbe
 
             FloatingActionButton fabPlus = FindViewById<FloatingActionButton>(Resource.Id.fabPlus);
             fabPlus.Click += FabPlusOnClick;
+
+            //ListView Wear = FindViewById<ListView>(Resource.Id.listView1);
+            //ExpandableListView Wear = FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
+            //var wear = (Wear[])Enum.GetValues(typeof(Wear));
+            //Wear.Adapter = new BaseExpandableListAdapter<Wear>(this, Android.Resource.Layout.SimpleListItem1, wear);
+            //Wear.SetAdapter(new ExpandableAdapter(this, wear));
+
+            textWear = FindViewById<TextView>(Resource.Id.textView1);
+            textWear.Click += TextWearOnClick;
+
+            popWear = new PopupMenu(this, textWear);
+            int x = 1;
+
+            foreach (var wear in (Wear[])Enum.GetValues(typeof(Wear)))
+            {
+                popWear.Menu.Add(Menu.None, x, x, wear.ToString());
+                x++;
+            }
+
+            popWear.MenuItemClick += popWearOnClick;
         }
+
+        private void popWearOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+        {
+            textWear.Text = e.Item.TitleFormatted.ToString();
+        }
+
+        private void TextWearOnClick(object sender, EventArgs e)
+        {
+            popWear.Show();
+        }
+
+
 
         private void FabPlusOnClick(object sender, EventArgs eventArgs)
         {
