@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -28,16 +30,17 @@ namespace Androbe
             ImgView = (ImageView)FindViewById(Resource.Id.imageView1);
             FabState = ViewStates.Visible;
 
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fabPlus);
-            fab.Click += FabOnClick;
+            FloatingActionButton fabPlus = FindViewById<FloatingActionButton>(Resource.Id.fabPlus);
+            fabPlus.Click += FabPlusOnClick;
 
-            FloatingActionButton fabPhoto = FindViewById<FloatingActionButton>(Resource.Id.fabPhoto);
-            fabPhoto.Click += FabPhotoOnClick;
+            FloatingActionButton fabAdd = FindViewById<FloatingActionButton>(Resource.Id.fabAdd);
+            fabAdd.Click += FabAddOnClick;
         }
 
-        private void FabPhotoOnClick(object sender, EventArgs e)
+        private void FabAddOnClick(object sender, EventArgs e)
         {
-            TakePhoto();
+            Intent intent = new Intent(this, typeof(AddItemActivity));
+            StartActivity(intent);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -57,36 +60,13 @@ namespace Androbe
             return base.OnOptionsItemSelected(item);
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
+        private void FabPlusOnClick(object sender, EventArgs eventArgs)
         {
             FindViewById(Resource.Id.fabFolder).Visibility = FabState;
-            FindViewById(Resource.Id.fabGallery).Visibility = FabState;
-            FindViewById(Resource.Id.fabPhoto).Visibility = FabState;
+            FindViewById(Resource.Id.fabAdd).Visibility = FabState;
 
             if (FabState == ViewStates.Invisible) FabState = ViewStates.Visible;
             else FabState = ViewStates.Invisible;
-        }
-
-        async void TakePhoto()
-        {
-            await CrossMedia.Current.Initialize();
-
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            {
-                PhotoSize=Plugin.Media.Abstractions.PhotoSize.Medium,
-                CompressionQuality = 40,
-                Name = "item.jpg",
-                Directory = "sample"
-            });
-
-            if (file == null)
-            {
-                return;
-            }
-
-            byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
-            Bitmap bitmapImage = BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
-            ImgView.SetImageBitmap(bitmapImage);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

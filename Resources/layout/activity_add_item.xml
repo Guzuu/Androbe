@@ -14,7 +14,28 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/content_main" />
+        layout="@layout/content_add_item" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:layout_gravity="bottom"
+        android:gravity="left">
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_menu_revert"/>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:id="@+id/linearLayout1">
+        android:id="@+id/linearLayout2">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabFolder"
@@ -35,21 +56,29 @@
             android:visibility="invisible" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabAdd"
+            android:id="@+id/fabGallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_upload"
+            android:src="@drawable/ic_doc_image"
             android:tint="@android:color/white"
             android:visibility="invisible" />
 
         <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabPlus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"
-        android:tint="@android:color/white"/>
+            android:id="@+id/fabPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_camera"
+            android:visibility="invisible" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@android:color/white"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
