@@ -54,14 +54,6 @@
         android:id="@+id/linearLayout2">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabGallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_doc_image"
-            android:tint="@android:color/white" />
-
-        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

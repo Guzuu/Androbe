@@ -17,5 +17,6 @@ namespace Androbe.Clothes
         Color color { get; set; }
         string brand { get; set; }
         Size size { get; set; }
+        Guid guid { get; set; }
     }
 }

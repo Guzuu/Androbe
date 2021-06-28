@@ -15,6 +15,7 @@ using Android.Views;
 using Android.Widget;
 using Plugin.Media;
 using Androbe.Clothes;
+using Androbe;
 
 namespace Androbe
 {
@@ -25,11 +26,15 @@ namespace Androbe
         TextView textWear, textType, textSize, textColor;
         EditText textBrand;
         PopupMenu popWear, popType, popSize, popColor;
+        Guid guid;
+        Bitmap btmp;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_add_item);
+
+            guid = Guid.NewGuid();
 
             ImgView = (ImageView)FindViewById(Resource.Id.imageView1);
 
@@ -39,14 +44,8 @@ namespace Androbe
             FloatingActionButton fabPhoto = FindViewById<FloatingActionButton>(Resource.Id.fabPhoto);
             fabPhoto.Click += FabTakePhotoOnClick;
 
-            FloatingActionButton fabGallery = FindViewById<FloatingActionButton>(Resource.Id.fabGallery);
-            fabGallery.Click += FabPickPhotoOnClick;
-
-            //ListView Wear = FindViewById<ListView>(Resource.Id.listView1);
-            //ExpandableListView Wear = FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
-            //var wear = (Wear[])Enum.GetValues(typeof(Wear));
-            //Wear.Adapter = new BaseExpandableListAdapter<Wear>(this, Android.Resource.Layout.SimpleListItem1, wear);
-            //Wear.SetAdapter(new ExpandableAdapter(this, wear));
+            FloatingActionButton fabSave = FindViewById<FloatingActionButton>(Resource.Id.fabSave);
+            fabSave.Click += FabSaveOnClick;
 
             textWear = FindViewById<TextView>(Resource.Id.textViewWear);
             textWear.Click += TextWearOnClick;
@@ -66,13 +65,42 @@ namespace Androbe
             popSize = new PopupMenu(this, textSize);
             popColor = new PopupMenu(this, textColor);
 
-            Helpers.PopEnum<Wear>(popWear);
-            Helpers.PopEnum<Size>(popSize);
-            Helpers.PopEnum<Clothes.Color>(popColor);
+            Services.PopEnum<Wear>(popWear);
+            Services.PopEnum<Size>(popSize);
+            Services.PopEnum<Clothes.Color>(popColor);
 
             popWear.MenuItemClick += popWearOnClick;
             popSize.MenuItemClick += popSizeOnClick;
             popColor.MenuItemClick += popColorOnClick;
+        }
+
+        private void FabSaveOnClick(object sender, EventArgs e)
+        {
+            switch (textWear.Text)
+            {
+                case "Hat":
+                    Hat hat = new Hat()
+                    {
+                        type = (HatType)Enum.Parse(typeof(HatType), textType.Text),
+                        size = (Size)Enum.Parse(typeof(Size), textSize.Text),
+                        color = (Clothes.Color)Enum.Parse(typeof(Clothes.Color), textColor.Text),
+                        brand = textBrand.Text,
+                        guid = guid,
+                    };
+                    break;
+
+                case "Top":
+
+                    break;
+
+                case "Bottom":
+
+                    break;
+
+                case "Shoes":
+
+                    break;
+            }
         }
 
         private void popColorOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
@@ -140,22 +168,22 @@ namespace Androbe
 
         private void PopShoes()
         {
-            Helpers.PopEnum<ShoesType>(popType);
+            Services.PopEnum<ShoesType>(popType);
         }
 
         private void PopPants()
         {
-            Helpers.PopEnum<PantsType>(popType);
+            Services.PopEnum<PantsType>(popType);
         }
 
         private void PopShirts()
         {
-            Helpers.PopEnum<ShirtType>(popType);
+            Services.PopEnum<ShirtType>(popType);
         }
 
         private void PopHats()
         {
-            Helpers.PopEnum<HatType>(popType);
+            Services.PopEnum<HatType>(popType);
         }
 
         private void FabReturnOnClick(object sender, EventArgs e)
@@ -164,60 +192,12 @@ namespace Androbe
             StartActivity(intent);
         }
 
-        private async void FabPickPhotoOnClick(object sender, EventArgs e)
-        {
-            Bitmap btmp = await PickPhoto();
-
-            ImgView = (ImageView)FindViewById(Resource.Id.imageView1);
-            ImgView.SetImageBitmap(btmp);
-        }
-
         private async void FabTakePhotoOnClick(object sender, EventArgs e)
         {
-            Bitmap btmp = await TakePhoto();
+            btmp = await Services.TakePhoto(guid.ToString()+".jpg");
 
             ImgView = (ImageView)FindViewById(Resource.Id.imageView1);
             ImgView.SetImageBitmap(btmp);
-        }
-
-        async Task<Bitmap> TakePhoto()
-        {
-            await CrossMedia.Current.Initialize();
-
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-                CompressionQuality = 40,
-                Name = "item.jpg",
-                Directory = "sample"
-            });
-
-            if (file == null)
-            {
-                return null;
-            }
-
-            byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
-            return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
-        }
-
-        async Task<Bitmap> PickPhoto()
-        {
-            await CrossMedia.Current.Initialize();
-
-            var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
-            {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-                CompressionQuality = 40
-            });
-
-            if (file == null)
-            {
-                return null;
-            }
-
-            byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
-            return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
         }
     }
 }
