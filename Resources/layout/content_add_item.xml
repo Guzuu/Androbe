@@ -9,8 +9,6 @@
     android:gravity="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_add_item">
-
-    
         
     <ImageView
         android:src="@android:drawable/ic_menu_gallery"
@@ -23,30 +21,67 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.15"
+        android:paddingTop="20dp"
         android:id="@+id/frameLayout1">
 
         <TextView
-            android:text="Wear type"
+            android:text="Wear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
             android:paddingStart="48dp"
             android:paddingEnd="48dp"
-            android:id="@+id/textView1"
+            android:id="@+id/textViewWear"
             android:textSize="20dp"/>
 
-
-
-        <!--<EditText
+        <TextView
+            android:text="Type"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:id="@+id/editText2"
-            android:inputType="text"
-            android:hint="Color"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:paddingStart="48dp"
             android:paddingEnd="48dp"
-            android:paddingBottom="96dp"/>-->
+            android:layout_marginTop="48dp"
+            android:id="@+id/textViewType"
+            android:textSize="20dp"/>
+        
+        <TextView
+            android:text="Size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:layout_marginTop="96dp"
+            android:id="@+id/textViewSize"
+            android:textSize="20dp"/>
+        
+        <TextView
+            android:text="Color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:layout_marginTop="144dp"
+            android:id="@+id/textViewColor"
+            android:textSize="20dp"/>
+        
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:layout_marginTop="192dp"
+            android:id="@+id/editTextBrand"
+            android:inputType="text"
+            android:hint="Brand"
+            android:textSize="20dp"/>
     </FrameLayout>
 </LinearLayout>

@@ -22,9 +22,9 @@ namespace Androbe
     public class AddItemActivity : AppCompatActivity
     {
         ImageView ImgView;
-        ViewStates FabState;
-        TextView textWear;
-        PopupMenu popWear;
+        TextView textWear, textType, textSize, textColor;
+        EditText textBrand;
+        PopupMenu popWear, popType, popSize, popColor;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -42,33 +42,95 @@ namespace Androbe
             FloatingActionButton fabGallery = FindViewById<FloatingActionButton>(Resource.Id.fabGallery);
             fabGallery.Click += FabPickPhotoOnClick;
 
-            FloatingActionButton fabPlus = FindViewById<FloatingActionButton>(Resource.Id.fabPlus);
-            fabPlus.Click += FabPlusOnClick;
-
             //ListView Wear = FindViewById<ListView>(Resource.Id.listView1);
             //ExpandableListView Wear = FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
             //var wear = (Wear[])Enum.GetValues(typeof(Wear));
             //Wear.Adapter = new BaseExpandableListAdapter<Wear>(this, Android.Resource.Layout.SimpleListItem1, wear);
             //Wear.SetAdapter(new ExpandableAdapter(this, wear));
 
-            textWear = FindViewById<TextView>(Resource.Id.textView1);
+            textWear = FindViewById<TextView>(Resource.Id.textViewWear);
             textWear.Click += TextWearOnClick;
 
-            popWear = new PopupMenu(this, textWear);
-            int x = 1;
+            textType = FindViewById<TextView>(Resource.Id.textViewType);
 
-            foreach (var wear in (Wear[])Enum.GetValues(typeof(Wear)))
-            {
-                popWear.Menu.Add(Menu.None, x, x, wear.ToString());
-                x++;
-            }
+            textSize = FindViewById<TextView>(Resource.Id.textViewSize);
+            textSize.Click += TextSizeOnClick;
+
+            textColor = FindViewById<TextView>(Resource.Id.textViewColor);
+            textColor.Click += TextColorOnClick;
+
+            textBrand = FindViewById<EditText>(Resource.Id.editTextBrand);
+
+            popWear = new PopupMenu(this, textWear);
+            popType = new PopupMenu(this, textType);
+            popSize = new PopupMenu(this, textSize);
+            popColor = new PopupMenu(this, textColor);
+
+            Helpers.PopEnum<Wear>(popWear);
+            Helpers.PopEnum<Size>(popSize);
+            Helpers.PopEnum<Clothes.Color>(popColor);
 
             popWear.MenuItemClick += popWearOnClick;
+            popSize.MenuItemClick += popSizeOnClick;
+            popColor.MenuItemClick += popColorOnClick;
+        }
+
+        private void popColorOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+        {
+            textColor.Text = e.Item.TitleFormatted.ToString();
+        }
+
+        private void popSizeOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+        {
+            textSize.Text = e.Item.TitleFormatted.ToString();
+        }
+
+        private void TextColorOnClick(object sender, EventArgs e)
+        {
+            popColor.Show();
+        }
+
+        private void TextSizeOnClick(object sender, EventArgs e)
+        {
+            popSize.Show();
         }
 
         private void popWearOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
-            textWear.Text = e.Item.TitleFormatted.ToString();
+            string sWear = e.Item.TitleFormatted.ToString();
+            textWear.Text = sWear;
+            textType.Text = "Type";
+            textType.Click += TextTypeOnClick;
+
+            switch (sWear)
+            {
+                case "Hat":
+                    PopHats();
+                    break;
+
+                case "Top":
+                    PopShirts();
+                    break;
+
+                case "Bottom":
+                    PopPants();
+                    break;
+
+                case "Shoes":
+                    PopShoes();
+                    break;
+            }
+        }
+
+        private void PopTypeOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+        { 
+            textType.Text = e.Item.TitleFormatted.ToString();
+        }
+
+        private void TextTypeOnClick(object sender, EventArgs e)
+        {
+            popType.Show();
+            popType.MenuItemClick += PopTypeOnClick;
         }
 
         private void TextWearOnClick(object sender, EventArgs e)
@@ -76,16 +138,24 @@ namespace Androbe
             popWear.Show();
         }
 
-
-
-        private void FabPlusOnClick(object sender, EventArgs eventArgs)
+        private void PopShoes()
         {
-            FindViewById(Resource.Id.fabFolder).Visibility = FabState;
-            FindViewById(Resource.Id.fabGallery).Visibility = FabState;
-            FindViewById(Resource.Id.fabPhoto).Visibility = FabState;
+            Helpers.PopEnum<ShoesType>(popType);
+        }
 
-            if (FabState == ViewStates.Invisible) FabState = ViewStates.Visible;
-            else FabState = ViewStates.Invisible;
+        private void PopPants()
+        {
+            Helpers.PopEnum<PantsType>(popType);
+        }
+
+        private void PopShirts()
+        {
+            Helpers.PopEnum<ShirtType>(popType);
+        }
+
+        private void PopHats()
+        {
+            Helpers.PopEnum<HatType>(popType);
         }
 
         private void FabReturnOnClick(object sender, EventArgs e)

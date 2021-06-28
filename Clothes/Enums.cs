@@ -139,4 +139,19 @@ namespace Androbe.Clothes
         FlannelShirt,
         Jacket,
     }
+
+    public partial class Helpers
+    {
+        public static void PopEnum<T>(PopupMenu pm) where T : System.Enum
+        {
+            int x = 1;
+            pm.Menu.Clear();
+
+            foreach (var _enum in Enum.GetValues(typeof(T)))
+            {
+                pm.Menu.Add(Menu.None, x, x, _enum.ToString());
+                x++;
+            }
+        }
+    }
 }
