@@ -18,6 +18,11 @@ namespace Androbe
 {
     public class Services
     {
+
+        /// <summary>
+        /// Czysci i wypelnia popup menu wartosciami enum
+        /// </summary>
+        /// <param name="pm">Obiekt popup menu</param>
         public static void PopEnum<T>(PopupMenu pm) where T : System.Enum
         {
             int x = 1;
@@ -30,6 +35,13 @@ namespace Androbe
             }
         }
 
+
+        /// <summary>
+        /// Zapisuje zdjecie
+        /// </summary>
+        /// <param name="bitmap">obraz</param>
+        /// <param name="filename">nazwa pliku</param>
+        /// <returns>true lub false</returns>
         public static bool SaveImage(Bitmap bitmap, string filename)
         {
             bool success = false;
@@ -54,6 +66,11 @@ namespace Androbe
             return success;
         }
 
+        /// <summary>
+        /// Uruchamia aparat i odsyla stworzone zdjecie
+        /// </summary>
+        /// <param name="photoName">nazwa dla zdjecia</param>
+        /// <returns>wykonane zdjecie w formacie bitmapy</returns>
         public static async Task<Bitmap> TakePhoto(string photoName)
         {
             await CrossMedia.Current.Initialize();
@@ -76,12 +93,21 @@ namespace Androbe
             return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
         }
 
+        /// <summary>
+        /// Szuka zdjecia w galerii i zwraca
+        /// </summary>
+        /// <param name="filePath">sciezka zdjecia</param>
+        /// <returns>zdjecie w formacie bitmapy</returns>
         public static Bitmap GetPhoto(string filePath)
         {
             byte[] imageArray = System.IO.File.ReadAllBytes(filePath) ?? null;
             return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
         }
 
+        /// <summary>
+        /// Uruchamia galerie i odsyla wybrane zdjecie
+        /// </summary>
+        /// <returns>wybrane zdjecie w formacie bitmapy</returns>
         public static async Task<Bitmap> PickPhoto()
         {
             await CrossMedia.Current.Initialize();
@@ -101,6 +127,12 @@ namespace Androbe
             return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
         }
 
+
+        /// <summary>
+        /// Zapisuje obiekt do istniejacego pliku json
+        /// </summary>
+        /// <param name="wear">typ ubrania</param>
+        /// <param name="filePath">sciezka do pliku json</param>
         public static void SaveToJson<T>(T wear, string filePath)
         {
             string jsonData = "";
@@ -119,6 +151,10 @@ namespace Androbe
             File.WriteAllText(filePath, jsonData);
         }
 
+        /// <summary>
+        /// Zczytuje dane z pliku json i konwertuje na liste obiektow
+        /// </summary>
+        /// <param name="filePath">sciezka do pliku json</param>
         public static List<T> ReadFromJson<T>(string filePath)
         {
             if (!File.Exists(filePath))
@@ -130,6 +166,5 @@ namespace Androbe
 
             return list;
         }
-        //
     }
 }

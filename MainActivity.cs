@@ -21,6 +21,10 @@ namespace Androbe
         ViewStates FabState;
         ImageView imgViewHat, imgViewShirt, imgViewPants, imgViewShoes;
 
+        /// <summary>
+        /// Konfiguruje widoki 
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -52,6 +56,13 @@ namespace Androbe
             linearLayoutImages = FindViewById<LinearLayout>(Resource.Id.linearLayoutImages);
         }
 
+        /// <summary>
+        /// Uruchamiana przy kliknieciu na pole zdjecia w ekranie glownym.
+        /// Wczytuje wszystkie obiekty typu buty oraz znajduje przypisane do nich zdjecia z galerii.
+        /// Tworzy scrollable layout ze zdjeciami i opisami.
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
         private void ImgViewShoes_Click(object _sender, EventArgs _e)
         {
             linearLayoutImages.RemoveAllViews();
@@ -77,6 +88,13 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Uruchamiana przy kliknieciu na pole zdjecia w ekranie glownym.
+        /// Wczytuje wszystkie obiekty typu spodnie oraz znajduje przypisane do nich zdjecia z galerii.
+        /// Tworzy scrollable layout ze zdjeciami i opisami.
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
         private void ImgViewPants_Click(object _sender, EventArgs _e)
         {
             linearLayoutImages.RemoveAllViews();
@@ -102,6 +120,13 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Uruchamiana przy kliknieciu na pole zdjecia w ekranie glownym.
+        /// Wczytuje wszystkie obiekty typu koszulki oraz znajduje przypisane do nich zdjecia z galerii.
+        /// Tworzy scrollable layout ze zdjeciami i opisami.
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
         private void ImgViewShirt_Click(object _sender, EventArgs _e)
         {
             linearLayoutImages.RemoveAllViews();
@@ -127,6 +152,13 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Uruchamiana przy kliknieciu na pole zdjecia w ekranie glownym.
+        /// Wczytuje wszystkie obiekty typu czapki oraz znajduje przypisane do nich zdjecia z galerii.
+        /// Tworzy scrollable layout ze zdjeciami i opisami.
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
         private void ImgViewHat_Click(object _sender, EventArgs _e)
         {
             linearLayoutImages.RemoveAllViews();
@@ -152,6 +184,12 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Chowa scrollable layout  ze zdjeciami a nastepnie przypisuje wybrane zdjecie do kliknietej na poczatku kontrolki
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="wear">Typ ubrania</param>
         private void Image_Click(object sender, EventArgs e, Wear wear)
         {
             linearLayoutImages.Visibility = ViewStates.Gone;
@@ -173,6 +211,11 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Uruchamia formularz dodawania obiektu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FabAddOnClick(object sender, EventArgs e)
         {
             Intent intent = new Intent(this, typeof(AddItemActivity));
@@ -196,6 +239,11 @@ namespace Androbe
             return base.OnOptionsItemSelected(item);
         }
 
+        /// <summary>
+        /// Odkrywa/Zakrywa reszte przyciskow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void FabPlusOnClick(object sender, EventArgs eventArgs)
         {
             FindViewById(Resource.Id.fabFolder).Visibility = FabState;

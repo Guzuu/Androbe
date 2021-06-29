@@ -29,6 +29,10 @@ namespace Androbe
         Guid guid;
         Bitmap btmp;
 
+        /// <summary>
+        /// Konfiguruje widoki 
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -74,6 +78,11 @@ namespace Androbe
             popColor.MenuItemClick += popColorOnClick;
         }
 
+        /// <summary>
+        /// Zapisuje obiekt oraz zdjecie
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FabSaveOnClick(object sender, EventArgs e)
         {
             string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), filePath;
@@ -135,26 +144,51 @@ namespace Androbe
             FabReturnOnClick(sender, e);
         }
 
+        /// <summary>
+        /// Ustawia tekst koloru na podstawie wybranego z popup menu obiektu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void popColorOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
             textColor.Text = e.Item.TitleFormatted.ToString();
         }
 
+        /// <summary>
+        /// Ustawia tekst rozmiaru na podstawie wybranego z popup menu obiektu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void popSizeOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
             textSize.Text = e.Item.TitleFormatted.ToString();
         }
 
+        /// <summary>
+        /// Pokazuje popup menu kolorow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextColorOnClick(object sender, EventArgs e)
         {
             popColor.Show();
         }
 
+        /// <summary>
+        /// Pokazuje popup menu rozmiarow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextSizeOnClick(object sender, EventArgs e)
         {
             popSize.Show();
         }
 
+        /// <summary>
+        /// Ustawia odpowiedni typ ubioru na podstawie wybranego ubioru
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void popWearOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
             string sWear = e.Item.TitleFormatted.ToString();
@@ -182,48 +216,83 @@ namespace Androbe
             }
         }
 
+        /// <summary>
+        /// Ustawia tekst typu na podstawie wybranego z popup menu obiektu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PopTypeOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         { 
             textType.Text = e.Item.TitleFormatted.ToString();
         }
 
+        /// <summary>
+        /// Pokazuje popup menu typow oraz tworzy onclick event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextTypeOnClick(object sender, EventArgs e)
         {
             popType.Show();
             popType.MenuItemClick += PopTypeOnClick;
         }
 
+        /// <summary>
+        /// Pokazuje popup menu typow ubran
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextWearOnClick(object sender, EventArgs e)
         {
             popWear.Show();
         }
 
+        /// <summary>
+        /// Wypelnia popup menu butow wartosciami z enum butow
+        /// </summary>
         private void PopShoes()
         {
             Services.PopEnum<ShoesType>(popType);
         }
 
+        /// <summary>
+        /// Wypelnia popup menu spodni wartosciami z enum spodni
+        /// </summary>
         private void PopPants()
         {
             Services.PopEnum<PantsType>(popType);
         }
 
+        /// <summary>
+        /// Wypelnia popup menu koszulek wartosciami z enum koszulek
+        /// </summary>
         private void PopShirts()
         {
             Services.PopEnum<ShirtType>(popType);
         }
 
+        /// <summary>
+        /// Wypelnia popup menu czapek wartosciami z enum czapek
+        /// </summary>
         private void PopHats()
         {
             Services.PopEnum<HatType>(popType);
         }
 
+        /// <summary>
+        /// Wraca do glownego panelu
+        /// </summary>
         private void FabReturnOnClick(object sender, EventArgs e)
         {
             Intent intent = new Intent(this, typeof(MainActivity));
             StartActivity(intent);
         }
 
+        /// <summary>
+        /// Uruchamia akcje zdjecia oraz ustawia zdjecie na widoku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void FabTakePhotoOnClick(object sender, EventArgs e)
         {
             btmp = await Services.TakePhoto(guid.ToString()+".jpg");
