@@ -68,6 +68,8 @@ namespace Androbe
                 filePath = System.IO.Path.Combine(path, "Wardrobe", item.guid.ToString() + ".jpg");
                 image.SetImageBitmap(Services.GetPhoto(filePath));
                 text.Text = $"{item.brand} {item.type} {item.color} {item.size}";
+                text.TextSize = 30;
+
                 linearLayoutImages.AddView(image);
                 linearLayoutImages.AddView(text);
 
@@ -91,6 +93,7 @@ namespace Androbe
                 filePath = System.IO.Path.Combine(path, "Wardrobe", item.guid.ToString() + ".jpg");
                 image.SetImageBitmap(Services.GetPhoto(filePath));
                 text.Text = $"{item.brand} {item.type} {item.color} {item.size}";
+                text.TextSize = 30;
 
                 linearLayoutImages.AddView(image);
                 linearLayoutImages.AddView(text);
@@ -115,6 +118,7 @@ namespace Androbe
                 filePath = System.IO.Path.Combine(path, "Wardrobe", item.guid.ToString() + ".jpg");
                 image.SetImageBitmap(Services.GetPhoto(filePath));
                 text.Text = $"{item.brand} {item.type} {item.color} {item.size}";
+                text.TextSize = 30;
 
                 linearLayoutImages.AddView(image);
                 linearLayoutImages.AddView(text);
@@ -133,13 +137,13 @@ namespace Androbe
 
             foreach (var item in list)
             {
-                linearLayoutImages.RemoveAllViews();
                 ImageView image = new ImageView(this);
                 TextView text = new TextView(this);
                 path = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath;
                 filePath = System.IO.Path.Combine(path, "Wardrobe", item.guid.ToString() + ".jpg");
                 image.SetImageBitmap(Services.GetPhoto(filePath));
                 text.Text = $"{item.brand} {item.type} {item.color} {item.size}";
+                text.TextSize = 30;
 
                 linearLayoutImages.AddView(image);
                 linearLayoutImages.AddView(text);
