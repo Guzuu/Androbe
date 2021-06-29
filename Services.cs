@@ -11,6 +11,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 using Plugin.Media;
 
 namespace Androbe
@@ -75,6 +76,12 @@ namespace Androbe
             return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
         }
 
+        public static Bitmap GetPhoto(string filePath)
+        {
+            byte[] imageArray = System.IO.File.ReadAllBytes(filePath) ?? null;
+            return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
+        }
+
         public static async Task<Bitmap> PickPhoto()
         {
             await CrossMedia.Current.Initialize();
@@ -92,6 +99,36 @@ namespace Androbe
 
             byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
             return BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
+        }
+
+        public static void SaveToJson<T>(T wear, string filePath)
+        {
+            string jsonData = "";
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+            }
+            else
+            {
+                jsonData = File.ReadAllText(filePath);
+            }
+            List<T> list = JsonConvert.DeserializeObject<List<T>>(jsonData) ?? new List<T>();
+            list.Add(wear);
+
+            jsonData = JsonConvert.SerializeObject(list);
+            File.WriteAllText(filePath, jsonData);
+        }
+
+        public static List<T> ReadFromJson<T>(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+            var jsonData = File.ReadAllText(filePath);
+            List<T> list = JsonConvert.DeserializeObject<List<T>>(jsonData) ?? new List<T>();
+
+            return list;
         }
     }
 }

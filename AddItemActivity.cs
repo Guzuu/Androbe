@@ -76,6 +76,8 @@ namespace Androbe
 
         private void FabSaveOnClick(object sender, EventArgs e)
         {
+            string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), filePath;
+
             switch (textWear.Text)
             {
                 case "Hat":
@@ -87,20 +89,50 @@ namespace Androbe
                         brand = textBrand.Text,
                         guid = guid,
                     };
+                    filePath = System.IO.Path.Combine(path, "hats.json");
+                    Services.SaveToJson(hat, filePath);
                     break;
 
                 case "Top":
-
+                    Shirt shirt = new Shirt()
+                    {
+                        type = (ShirtType)Enum.Parse(typeof(ShirtType), textType.Text),
+                        size = (Size)Enum.Parse(typeof(Size), textSize.Text),
+                        color = (Clothes.Color)Enum.Parse(typeof(Clothes.Color), textColor.Text),
+                        brand = textBrand.Text,
+                        guid = guid,
+                    };
+                    filePath = System.IO.Path.Combine(path, "shirts.json");
+                    Services.SaveToJson(shirt, filePath);
                     break;
 
                 case "Bottom":
-
+                    Pants pants = new Pants()
+                    {
+                        type = (PantsType)Enum.Parse(typeof(PantsType), textType.Text),
+                        size = (Size)Enum.Parse(typeof(Size), textSize.Text),
+                        color = (Clothes.Color)Enum.Parse(typeof(Clothes.Color), textColor.Text),
+                        brand = textBrand.Text,
+                        guid = guid,
+                    };
+                    filePath = System.IO.Path.Combine(path, "pants.json");
+                    Services.SaveToJson(pants, filePath);
                     break;
 
                 case "Shoes":
-
+                    Shoes shoes = new Shoes()
+                    {
+                        type = (ShoesType)Enum.Parse(typeof(ShoesType), textType.Text),
+                        size = (Size)Enum.Parse(typeof(Size), textSize.Text),
+                        color = (Clothes.Color)Enum.Parse(typeof(Clothes.Color), textColor.Text),
+                        brand = textBrand.Text,
+                        guid = guid,
+                    };
+                    filePath = System.IO.Path.Combine(path, "shoes.json");
+                    Services.SaveToJson(shoes, filePath);
                     break;
             }
+            FabReturnOnClick(sender, e);
         }
 
         private void popColorOnClick(object sender, PopupMenu.MenuItemClickEventArgs e)
